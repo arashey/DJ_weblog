@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}لیست پست‌ها{% endblock %}
+
+{% block content %}
+<div class="post-list">
+    <h1>لیست پست‌ها</h1>
+    <div class="posts">
+        {% for post in posts %}
+            <div class="post-item post-box">
+                <a href="{% url 'post_detail' post.id %}">
+                    {% if post.thumbnail %}
+                        <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" class="post-thumbnail">
+                    {% else %}
+                        <img src="/static/images/default-thumbnail.jpg" alt="تصویر پیش‌فرض" class="post-thumbnail">
+                    {% endif %}
+                    <h2>{{ post.title }}</h2>
+                </a>
+                <p>{{ post.content|slice:":100"|linebreaksbr }}...</p> <!-- استفاده از linebreaksbr برای حفظ فرمت محتوا -->
+                <div class="post-info">
+                    <span>نویسنده: {{ post.author.username }}</span>
+                    <span>تاریخ: {{ post.created_at|date:"Y/m/d" }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="pagination">
+        {% if is_paginated %}
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="page-button">صفحه قبل</a>
+            {% endif %}
+            <span>صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="page-button">صفحه بعد</a>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

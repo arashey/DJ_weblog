@@ -1,0 +1,96 @@
+<html dir="rtl" lang="en">
+{% extends "base.html" %}
+
+{% block title %}پروفایل کاربری{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <h2>پروفایل کاربری</h2>
+    <div class="profile-info">
+        <p><strong>نام:</strong> {{ user.username }}</p>
+        <p><strong>ایمیل:</strong> {{ user.email }}</p>
+        <p><strong>تاریخ عضویت:</strong> {{ user.date_joined|date:"Y/m/d" }}</p>
+        <p><strong>تعداد پست‌ها:</strong> {{ posts.count }}</p>
+    </div>
+
+    <h3>ارسال پست جدید:</h3>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- فرم ارسال پست -->
+        <button type="submit">ارسال پست</button>
+    </form>
+
+    <h3>پست‌های من:</h3>
+    <div class="user-posts">
+        {% for post in posts %}
+            <div class="post-item">
+                <a href="{% url 'post_detail' post.id %}">
+                    <h4>{{ post.title }}</h4>
+                </a>
+                <p>{{ post.content|slice:":100" }}...</p>
+                <a href="{% url 'delete_post' post.id %}" class="delete-post">حذف پست</a>
+            </div>
+        {% empty %}
+            <p>شما هیچ پستی ارسال نکرده‌اید.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+<style>
+/* استایل برای پروفایل */
+.profile-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.profile-info {
+    margin-bottom: 30px;
+}
+
+.profile-info p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.user-posts {
+    margin-top: 20px;
+}
+
+.user-posts .post-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-posts h4 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.user-posts p {
+    font-size: 14px;
+    color: #555;
+}
+
+.delete-post {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.delete-post:hover {
+    background-color: #d32f2f;
+}
+</style>
+</head>
+
+

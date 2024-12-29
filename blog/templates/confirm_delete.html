@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}تأیید حذف پست{% endblock %}
+
+{% block content %}
+<div class="delete-confirmation">
+    <h2>آیا مطمئن هستید که می‌خواهید این پست را حذف کنید؟</h2>
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.content|slice:":100" }}...</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">حذف</button>
+    </form>
+    <a href="{% url 'profile' %}">بازگشت به پروفایل</a>
+</div>
+
+<style>
+.delete-confirmation {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.delete-confirmation h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.delete-confirmation form button {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+}
+
+.delete-confirmation form button:hover {
+    background-color: #d32f2f;
+}
+
+.delete-confirmation a {
+    display: block;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+}
+</style>
+{% endblock %}

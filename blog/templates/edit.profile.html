@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>ویرایش پروفایل</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">ذخیره تغییرات</button>
+</form>
+{% endblock %}
+<style>
+    /* استایل برای پروفایل */
+    .profile-container {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+    }
+    
+    .profile-info {
+        margin-bottom: 30px;
+    }
+    
+    .profile-info p {
+        font-size: 16px;
+        margin: 5px 0;
+    }
+    
+    .user-posts {
+        margin-top: 20px;
+    }
+    
+    .user-posts .post-item {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .user-posts h4 {
+        margin: 0;
+        font-size: 18px;
+    }
+    
+    .user-posts p {
+        font-size: 14px;
+        color: #555;
+    }
+    </style>

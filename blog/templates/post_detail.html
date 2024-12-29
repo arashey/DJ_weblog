@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="post-detail">
+    <div class="post-meta">
+        <p>تعداد کل کاراکترهای نوشته شده: {{ post.content_length }}</p>
+
+    </div>
+    
+    <h1>{{ post.title }}</h1>
+    <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" class="post-thumbnail">
+    <p>{{ post.content|safe }}</p>  <!-- استفاده از فیلتر safe برای نمایش محتوای HTML -->
+    
+    <div class="post-info">
+        <span>نویسنده : {{ post.author.username }}</span>
+        <span>تاریخ: {{ post.created_at|date:"Y/m/d" }}</span>
+    </div>
+</div>
+
+<style>
+/* استایل برای صفحه جزئیات پست */
+.post-detail {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    line-height: 1.8;
+}
+
+/* استایل برای عنوان پست */
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.post-thumbnail {
+    width: 500px; /* عرض ثابت */
+    height: 500px; /* ارتفاع ثابت */
+    object-fit: cover; /* برش تصویر برای تناسب بهتر */
+    border-radius: 8px; /* گردکردن گوشه‌ها (اختیاری) */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* سایه برای زیبایی بیشتر */
+    margin: 10px auto; /* مرکز کردن تصویر */
+    display: block; /* برای نظم بیشتر */
+}
+
+
+/* استایل برای محتوای پست */
+.post-detail p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* استایل برای اطلاعات پست */
+.post-info {
+    font-size: 14px;
+    color: #888;
+    margin-top: 30px;
+}
+
+.post-info span {
+    margin-right: 15px;
+}
+
+/* استایل برای بخش متا */
+.post-meta {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+/* برای نمایش محتوای پست در قالب ریسپانسیو */
+@media (max-width: 768px) {
+    .post-detail {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .post-thumbnail {
+        max-height: 400px;
+    }
+}
+</style>
+{% endblock %}
+
+
+

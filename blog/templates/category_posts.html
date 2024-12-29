@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}پست‌های دسته {{ category.name }}{% endblock %}
+
+{% block content %}
+<div class="category-posts">
+    <h1>پست‌های دسته {{ category.name }}</h1>
+    <div class="posts">
+        {% for post in posts %}
+            <div class="post-item">
+                <a href="/post/{{ post.id }}/">
+                    <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}">
+                    <h2>{{ post.title }}</h2>
+                </a>
+                <p>{{ post.content|slice:":100" }}...</p>
+                <div class="post-info">
+                    <span>نویسنده: {{ post.author.username }}</span>
+                    <span>تاریخ: {{ post.created_at|date:"Y/m/d" }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

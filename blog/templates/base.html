@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="وبلاگ شخصی برای اشتراک‌گذاری مطالب">
+    <meta name="keywords" content="وبلاگ, دسته‌بندی, پست‌ها">
+    <meta name="author" content="نام شما">
+    <title>{% block title %}وبلاگ{% endblock %}</title>
+
+    <!-- اضافه کردن فونت -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: right;
+            direction: rtl;
+        }
+        
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        nav ul li {
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .post-thumbnail {
+            width: 150px; 
+            height: 150px; /* ارتفاع ثابت */
+            object-fit: cover; /* برش تصویر برای تناسب بهتر */
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* مرکز کردن محتوا */
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            background-color: #333;
+            color: white;
+            margin-top: 2rem;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="/">خانه</a></li>
+                    <li><a href="/about/">درباره ما</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'profile' %}">پروفایل</a></li>
+                        <li><a href="{% url 'logout' %}">خروج</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">ورود</a></li>
+                        <li><a href="{% url 'register' %}">ثبت نام</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <aside>
+                <div class="categories">
+                    <h3>دسته‌بندی‌ها</h3>
+                    <ul>
+                        {% for category in categories %}
+                            <li><a href="/category/{{ category.id }}/">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% block sidebar %}{% endblock %}
+            </aside>
+
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </main>
+
+    {% if advertisement %}
+        <div class="advertisement-bar">
+            <a href="{{ advertisement.link }}" target="_blank">
+                <img src="{{ advertisement.banner.url }}" alt="تبلیغات">
+            </a>
+        </div>
+    {% endif %}
+
+    <footer>
+        <p>تمامی حقوق محفوظ است. &copy; 2024</p>
+    </footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
